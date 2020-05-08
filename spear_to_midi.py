@@ -27,16 +27,22 @@ print('Constructing MIDI events...')
 t1 = perf_counter()
 midi_events = []
 for partial in partials:
-    on_time = partial[0][0]
-    off_time = partial[-1][0]
+    # Calculate MIDI note number
     average_freq = functions.sublists_index_avg(partial, 1)
     note = functions.freq_to_note(average_freq)
-    average_amp = functions.sublists_index_avg(partial, 2)
-    velocity = round(functions.linear_scale(average_amp, 0.0, 1.0, 0, 127))
-    note_on = ['note_on', on_time, note, velocity]
-    midi_events.append(note_on)
-    note_off = ['note_off', off_time, note, velocity]
-    midi_events.append(note_off)
+    # Filter out invalid MIDI notes
+    if 0 <= note <= 127:
+        # Calculate velocity
+        average_amp = functions.sublists_index_avg(partial, 2)
+        velocity = round(functions.linear_scale(average_amp, 0.0, 1.0, 0, 127))
+        # Construct and append note on message
+        on_time = partial[0][0]
+        note_on = ['note_on', on_time, note, velocity]
+        midi_events.append(note_on)
+        # Construct and append note off message
+        off_time = partial[-1][0]
+        note_off = ['note_off', off_time, note, velocity]
+        midi_events.append(note_off)
 t2 = perf_counter()
 print('Complete ({:.2f}ms)'.format((t2 - t1) * 1000))
 
