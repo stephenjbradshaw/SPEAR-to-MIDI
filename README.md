@@ -17,7 +17,7 @@ Steps for Mac/OSX (will be similar for other platforms):
 * In SPEAR, under 'File' -> 'Export Format' select 'Text - Partials', then 'File' -> 'Export As...'
 * Save the file inside the SPEAR_to_MIDI folder with the exact filename `SPEAR.txt`
 * Open Terminal and navigate to the SPEAR_to_MIDI folder.
-* Type the command `python3 main.py` to run the program.
+* Type the command `python3 SPEAR_to_MIDI.py` to run the program.
 * A MIDI file called `output.mid` will have been created inside the SPEAR_to_MIDI folder. This can be opened and edited in a score editing program like Sibelius or MuseScore.
 
 ## Limitations
