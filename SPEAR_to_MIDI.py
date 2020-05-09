@@ -9,6 +9,7 @@ tempo = bpm2tempo(60)
 
 
 # Read input file
+print('--- SPEAR to MIDI ---')
 print('Reading file...')
 t1 = perf_counter()
 with open('SPEAR.txt', 'r') as f:
@@ -77,3 +78,5 @@ for event in midi_events:
 midifile = MidiFile()
 midifile.tracks.append(track0)
 midifile.save('output.mid')
+
+print('COMPLETE')
