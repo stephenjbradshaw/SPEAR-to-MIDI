@@ -2,7 +2,4 @@
 __pycache__/
 *.mid
 venv/
-dump.txt
-SPEAR_medium.txt
 SPEAR.txt
-SPEAR_large.txt
