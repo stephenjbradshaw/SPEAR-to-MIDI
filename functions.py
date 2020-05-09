@@ -3,29 +3,28 @@ from mido import second2tick
 from math import log
 
 
-def convert_to_delta(midi_events):
-    """ (list of list of [str, float, int, int]) -> None
+def convert_to_delta(midi_events, PPQN, tempo):
+    """ (list of list of [str, float, int, int], int, int) -> None
 
     Mutates midi_events, replacing absolute time values (in seconds) with delta
     time values between events (in ticks)
     midi_events is pre-sorted by absolute time (index [1] of each inner list).
 
     >>> convert_to_delta([['note_on', 0.0, 64, 64], ['note_off', 0.1, 64, 64],
-    ...                   ['note_on', 0.1, 65, 64], ['note_off', 0.5, 65, 64]])
+    ...                   ['note_on', 0.1, 65, 64], ['note_off', 0.5, 65, 64]],
+    ...                   480, 1000000)
 
     """
 
     # Working backwards from the end of the list up to [1] inclusive, find the
     # difference between each item and the item with the next-smallest index.
-    # Convert this value to ticks and Overwrite the item with the result.
-    # Process [0] seperately at the end.
+    # Convert this value to ticks and overwrite the item with the result.
+    # Convert [0] to ticks seperately at the end.
     for i in reversed(range(1, len(midi_events))):
         delta_seconds = midi_events[i][1] - midi_events[i - 1][1]
-        # Tick conversion assumes beats-per-tick of 480 and
-        # tempo of 1000000 (60bpm)
-        delta_ticks = round(second2tick(delta_seconds, 480, 1000000))
+        delta_ticks = round(second2tick(delta_seconds, PPQN, tempo))
         midi_events[i][1] = delta_ticks
-    midi_events[0][1] = round(second2tick(midi_events[0][1], 480, 1000000))
+    midi_events[0][1] = round(second2tick(midi_events[0][1], PPQN, tempo))
 
 
 def freq_to_note(frequency):
@@ -34,8 +33,8 @@ def freq_to_note(frequency):
     Returns the nearest MIDI note number to frequency (in Hz).
     Assumes that MIDI note 69 (A4) is 440Hz.
 
-    >>> freq_to_note(880.1)
-    81
+    >>> freq_to_note(440.1)
+    69
     """
 
     midi_note = round(12 * log(frequency / 440, 2) + 69)
