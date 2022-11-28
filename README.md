@@ -41,4 +41,4 @@ Steps for Mac/OSX (will be similar for other platforms):
 * Create compiled applications for Mac and Windows.
 
 ## Author
-Stephen Bradshaw (stephen.j.bradshaw@gmail.com)
+Stephen Bradshaw (hello@stephenbradshaw.dev)
