@@ -78,7 +78,7 @@ def process_line(line):
     while len(split_line) > 0:
         timepoint = []
         for i in range(3):
-            item = float(split_line.pop(0))
+            item = float(split_line.pop(0).replace(',', '.'))
             timepoint.append(item)
         partial.append(timepoint)
 
