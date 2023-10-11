@@ -15,15 +15,14 @@ Steps for Mac/OSX (will be similar for other platforms):
 ## Usage
 * Create a spectral analysis using SPEAR. Use a relatively high 'Minimum amplitude threshold' value (e.g. -20dB) for best results.
 * In SPEAR, under 'File' -> 'Export Format' select 'Text - Partials', then 'File' -> 'Export As...'
-* Save the file inside the SPEAR_to_MIDI folder with the exact filename `SPEAR.txt`
+* Save the file inside the SPEAR_to_MIDI folder.
 * Open Terminal and navigate to the SPEAR_to_MIDI folder.
-* Type the command `python3 SPEAR_to_MIDI.py` to run the program.
-* A MIDI file called `output.mid` will have been created inside the SPEAR_to_MIDI folder. This can be opened and edited in a score editing program like Sibelius or MuseScore.
+* Type the command `python3 SPEAR_to_MIDI.py input_file output_file bpm` to run the program. Replace input_file, output_file and bpm with your files and choice for bpm. You do not have to specify them, the default to: input_file = "SPEAR.txt", output_file = "output.mid" and bpm = 60.
+* A MIDI file with the specified name will then be created. This can be opened and edited in a score editing program like Sibelius or MuseScore.
 
 ## Limitations
 
 * The program works best for relatively simple spectral analyses that don't have large numbers of simultaneous partials. If the program fails, try setting a higher value for 'Minimum amplitude threshold' when analysing the audio in SPEAR.
-* `output.mid` is overwritten every time the program is run. To avoid accidentally losing data, save the file elsewhere on your computer after running the program.
 
 ## Data interpretation details
 
