@@ -1,18 +1,34 @@
 import functions
 from mido import MidiTrack, MetaMessage, Message, MidiFile, bpm2tempo
 from time import perf_counter
+import sys
+
+# Access command-line arguments
+arguments = sys.argv
+if len(arguments) > 1:
+    input_file = str(arguments[1])
+else:
+    input_file = 'SPEAR.txt'
+if len(arguments) > 2:
+    output_file = str(arguments[2])
+else:
+    output_file = 'output.mid'
+if len(arguments) > 3:
+    bpm = int(arguments[3])
+else:
+    bpm = 60
 
 # Set beat resolution: Pulses (ticks) per quarter note. Normally 480.
 PPQN = 480
 # Set tempo. Converts bpm to MIDI tempo value (microseconds per quarter note).
-tempo = bpm2tempo(60)
+tempo = bpm2tempo(bpm)
 
 
 # Read input file
 print('--- SPEAR to MIDI ---')
 print('Reading file...')
 t1 = perf_counter()
-with open('SPEAR.txt', 'r') as f:
+with open(input_file, 'r') as f:
     lines = f.readlines()
 t2 = perf_counter()
 print('Complete ({:.2f}ms)'.format((t2 - t1) * 1000))
@@ -86,6 +102,6 @@ for event in midi_events:
 # Create a MidiFile object, append our track, save the file
 midifile = MidiFile()
 midifile.tracks.append(track0)
-midifile.save('output.mid')
+midifile.save(output_file)
 
 print('COMPLETE')
